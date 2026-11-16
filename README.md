@@ -25,6 +25,17 @@ npm run dev
 
 推送代码后，Cloudflare Pages 会自动构建并发布。首次打开页面时，后端会给浏览器写入匿名 `fandian_id` Cookie；不同浏览器的数据相互独立，不需要登录。
 
+## 部署为 Cloudflare Worker
+
+Worker 和 Pages 可以同时部署在同一个 GitHub 仓库中。Worker 使用同一个 D1 数据库和 `/api/state` 接口，静态文件由 `dist` 提供。
+
+1. 在 `wrangler.worker.jsonc` 中，将 `REPLACE_WITH_D1_DATABASE_ID` 替换为 Cloudflare D1 数据库详情页中的数据库 ID。数据库需先执行 `migrations/0001_init.sql`。
+2. Cloudflare 控制台打开 **Workers & Pages → 创建应用程序 → Workers → 导入仓库**，连接 GitHub 上的 `StarRiver-Y/fandian`，分支选 `master`。
+3. 构建命令填 `npm run build`，部署命令填 `npx wrangler deploy --config wrangler.worker.jsonc`，根目录留空。
+4. 部署完成后，在 Worker 的 **设置 → Domains & Routes** 确认已启用 `workers.dev`。
+
+当前账号的 Worker 子域名是 `icream`，因此 Worker 名称为 `fandian` 时，地址通常是 `https://fandian.icream.workers.dev/`。也可以在本地终端运行 `npm run deploy:worker` 部署。
+
 ## 推送到 GitHub
 
 ```sh
