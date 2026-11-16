@@ -12,7 +12,7 @@
     {
       "binding": "DB",
       "database_name": "fandian-db",
-      "database_id": "REPLACE_WITH_D1_DATABASE_ID",
+      "database_id": "24d83dc7-f8e9-4141-92ae-9cff92ede7e2",
       "migrations_dir": "migrations"
     }
   ]
